@@ -95,7 +95,7 @@ def main():
         pxels = pxels / 255.0
         pxels = np.append(pxels, [1])
         result = testPerceptron(pxels, weights)
-        print("Cannon result : ", result)        
+        print("Cannon Test result : ", result)        
     for filename in glob.glob(os.path.join(testCellPath, '*.jpg')): 
         img = Image.open(filename).convert('L')
         img = img.resize(size, Image.ANTIALIAS)
@@ -105,7 +105,7 @@ def main():
         pxels = pxels / 255.0
         pxels = np.append(pxels, [1])
         result = testPerceptron(pxels, weights)
-        print("Cellphone result : " , result)
+        print("Cellphone Test result : " , result)
  
 
 if __name__ == '__main__':
