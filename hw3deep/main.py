@@ -13,7 +13,7 @@ def KNN(x_train, y_train, sample_test, k ):
     lenght = len(x_train)
     
     Result = np.zeros([lenght, 2])
-    print(len(Result))
+
     for i in range(lenght):
         xxxx = x_train[i]
         result = np.subtract(sample_test, xxxx)
@@ -22,10 +22,29 @@ def KNN(x_train, y_train, sample_test, k ):
         result = np.sqrt(result)
         Result[i,0] = result
         Result[i,1] = y_train[i]
-    dataset = pd.DataFrame({'Column1': Result[:, 0], 'Column2': Result[:, 1]})
-    Result = dataset.sort_values('Column1')
-    for i in range(7):
-        print(Result[i])
+    
+
+    columnIndex = 0
+   
+    Result = Result[Result[:,columnIndex].argsort()]
+    _lis = np.zeros([3,2])    
+    _lis[0,0] = 1
+    _lis[1,0] = 2
+    _lis[2,0] = 3
+    for x in range(7):
+        if Result[x,1] == 1:
+            _lis[0,1] = _lis[0,1] + 1
+        elif Result[x,1] == 2:
+            _lis[1,1] = _lis[1,1] + 1
+        elif Result[x,1] == 3:
+            _lis[2,1] = _lis[2,1] + 1  
+            
+    
+    _lis = _lis*100/7
+    print("Bu resim  %"+ "\t%".join(map(str, _lis[:,1])) + " dir." )
+    
+        
+        
     return 0
 
 
@@ -57,13 +76,12 @@ def main():
     for filename in glob.glob(os.path.join(trainLaptopPath, '*.jpg')): 
         trainimages[j] = read128x128Image(filename)
         trainresult[j] = 3
-        j = j + 1        
-
-    trainimages, trainresult = shuffle(trainimages, trainresult)
+        j = j + 1      
+        
     k = 7
 
     test = ".\\test"
-    
+    print("Yüzdelerin sırası 1, 2 ve 3 üncü sınıfa göredir.")
     for filename in glob.glob(os.path.join(test, '*.jpg')): 
         pxels = read128x128Image(filename)  
         KNN(trainimages, trainresult, pxels, k )
